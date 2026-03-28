@@ -1,5 +1,5 @@
 extends Node
-
+var main : Control # cannonically this hsouldnt be here
 enum Binary {
 	YTDLP,
 	FFMPEG,
@@ -10,7 +10,7 @@ const ARG_BINDINGS : Dictionary[String, Array] = {
 	# audio format args
 	"mp3": ["--extract-audio", "--audio-format", "mp3"],
 	"wav" : ["--extract-audio", "--audio-format", "wav"],
-	"ogg" : ["--extract-audio", "--audio-format", "ogg"],
+	"ogg" : ["--extract-audio", "--audio-format", "vorbis"],
 	"flac" : ["--extract-audio", "--audio-format", "flac"],
 	"audio_original" : [],
 	
@@ -44,7 +44,25 @@ const ARG_BINDINGS : Dictionary[String, Array] = {
 	"480p" : ["-f", "\"bestvideo[height<=480]+bestaudio/best[height<=480]/best\""],
 	"360p" : ["-f", "\"bestvideo[height<=360]+bestaudio/best[height<=360]/best\""],
 	"240p" : ["-f", "\"bestvideo[height<=240]+bestaudio/best[height<=240]/best\""],
-	"144p" : ["-f", "\"bestvideo[height<=144]+bestaudio/best[height<=144]/best\""]
+	"144p" : ["-f", "\"bestvideo[height<=144]+bestaudio/best[height<=144]/best\""],
+	
+	# util
+	"has_playlist" : ["--flat-playlist", "--print", "\"%(playlist_title)s\"", "--no-download", "--no-playlist"]
+}
+
+const TITLE_COUNT_DELIMIATOR : String = "<[@$%!!!4>"
+
+const FILE_CHARACTER_REPLACEMENT : Dictionary[String, String] = {
+	":" : "：",
+	"/" : "／",
+	"\\" : "",
+	"?" : "？",
+	"*" : "＊",
+	"\"" : "＼",
+	"|" : "｜",
+	"%" : "％",
+	"<" : "＜",
+	">" : "＞"
 }
 
 #const CONTAINER_BINDINGS : Dictionary[String, String] = {
@@ -88,11 +106,12 @@ const BROWSER_NORMALIZATOR9000 : Dictionary[String, String] = {
 	"WhaleHTML": "whale",
 }
 
-var web_browser : String = ""
-
 const MAX_DOWNLOAD_TRANSCODE_RATIO_HISTORY : int = 8
 const APPROX_INIT_TIME = 4.0
 
+signal new_hook(hook : Dictionary, callable : Callable)
+
+var web_browser : String = ""
 var download_transcode_ratio_history : Array[float] = [0.018]
 var download_transcode_ratio : float:
 	get():
@@ -103,6 +122,9 @@ var download_transcode_ratio : float:
 		return total / download_transcode_ratio_history.size()
 
 var child_processes_ids : Array[int] = []
+
+var queue : Array[Callable]
+var current_request : Callable
 
 func _ready() -> void:
 	# find default web browser
@@ -136,7 +158,7 @@ func _ready() -> void:
 
 
 
-func run(args : Array[String], binary : Binary = Binary.YTDLP, console : bool = false, print_output : bool = false, block : bool = true, print_input : bool = false):
+func run(args : Array, binary : Binary = Binary.YTDLP, console : bool = false, print_output : bool = false, block : bool = true, print_input : bool = false):
 	var concatinated_args : String = ""
 	for arg : String in args:
 		concatinated_args += " " + arg
@@ -150,6 +172,7 @@ func run(args : Array[String], binary : Binary = Binary.YTDLP, console : bool = 
 		OS.execute("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /belownormal /b /wait " + BINARY_NAMES[binary] + concatinated_args], output, false, console)
 		if print_output:
 			print(output[0])
+		return output
 		
 	else:
 		var pipe : Dictionary = OS.execute_with_pipe("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /belownormal /b /wait " + BINARY_NAMES[binary] + concatinated_args], false)
@@ -274,42 +297,45 @@ func update_progress(process_hook : Dictionary, progress_hook : Dictionary, usin
 				
 				
 			
-			print(output)
+			#print(output)
 		
 		if errors.length() > 3:
 			printerr(errors) # TODO add on screen error printer
 	
 	progress_hook["done"] = true
+
 const DEFAULT_PROGRESS_HOOK : Dictionary = {"current": 0.0, "playlist": -1, "playlist_total" : -1, "is_audio" : false, "done" : false}
 
-
-func download_audio(link : String, output_dir : String, file_name_format: String, format : String, quality : String, progress_hook : Dictionary = DEFAULT_PROGRESS_HOOK.duplicate(), is_playlist : bool = false):
+func download_audio(link : String, output_dir : String, file_name_format: String, format : String, quality : String, progress_hook : Dictionary = DEFAULT_PROGRESS_HOOK.duplicate()):
 	var args : Array[String] = [
-		link,
+		"\"" + link + "\"",
 		"-o", "\"" + format_filename(file_name_format).replace("[quality]", quality) + ".%(ext)s" + "\"",
-		"-P", "\"" + output_dir + "\"",
+		"-P", "\"" + output_dir + "/" + get_playlist_title(link) + "\"",
 		"--cookies-from-browser", web_browser,
-		"--embed-metadata"
+		"--embed-metadata",
+		"--no-playlist"
 		#"--yes-playlist" if is_playlist else "--no-playlist",
-		#"--newline",
-		
+		#"--newline
 	]
 	
 	args.append_array(ARG_BINDINGS[format])
 	args.append_array(ARG_BINDINGS[quality])
 	
-	var runtime_info : Dictionary = run(args, Binary.YTDLP, false, false, false, true)
 	progress_hook["is_audio"] = true
-	update_progress(runtime_info, progress_hook, true)
-	return progress_hook
+	
+	var request_call : Callable = Callable(create_request.bindv([progress_hook, true, args, Binary.YTDLP, false, false, false, true, Util.create_temp_unique_id()]))
+	queue.append(request_call)
+	request_queue()
+	return request_call
 
-func download_video(link : String, output_dir : String, file_name_format: String, format : String, quality : String, muted : bool = false, progress_hook : Dictionary = DEFAULT_PROGRESS_HOOK.duplicate(), is_playlist : bool = false):
+func download_video(link : String, output_dir : String, file_name_format: String, format : String, quality : String, muted : bool = false, progress_hook : Dictionary = DEFAULT_PROGRESS_HOOK.duplicate()):
 	var args : Array[String] = [
-		link,
+		"\"" + link + "\"",
 		"-o", "\"" + format_filename(file_name_format).replace("[quality]", "%(height)sp") + ".%(ext)s" + "\"",
-		"-P", "\"" + output_dir + "\"",
+		"-P", "\"" + output_dir + "/" + get_playlist_title(link) + "\"",
 		"--cookies-from-browser", web_browser,
-		"--embed-metadata"
+		"--embed-metadata",
+		"--no-playlist"
 		#"--yes-playlist" if is_playlist else "--no-playlist",
 		#"--newline",
 	]
@@ -320,9 +346,68 @@ func download_video(link : String, output_dir : String, file_name_format: String
 	args.append_array(ARG_BINDINGS[format])
 	args.append_array(ARG_BINDINGS[quality])
 	
-	var runtime_info : Dictionary = run(args, Binary.YTDLP, false, false, false, true)
-	update_progress(runtime_info, progress_hook, false)
+	var request_call : Callable = Callable(create_request.bindv([progress_hook, false, args, Binary.YTDLP, false, false, false, true, Util.create_temp_unique_id()]))
+	queue.append(request_call)
+	request_queue()
+	return request_call
+	
+	#var runtime_info : Dictionary = run(args, Binary.YTDLP, false, false, false, true)
+	#update_progress(runtime_info, progress_hook, false)
+	#return progress_hook
+
+func get_playlist_title(link : String) -> String:
+	var args : Array = ["\"" + link + "\""]
+	args += ARG_BINDINGS["has_playlist"]
+	
+	var playlist_test : Array = run(args, Binary.YTDLP, false, true, true, true)
+	var response_string : String = playlist_test[0]
+	
+	if not response_string.contains("NA"):
+		print("is playlist")
+		var title : String = response_string.split("\n")[0]
+		
+		# A valid file name cannot be empty, begin or end with space characters, or contain characters that are not allowed (: / \ ? * " | % < >)
+		if title == "": title = "Unknown"
+			
+		while title.begins_with(" "): title.erase(0)
+		while title.ends_with(" "): title.erase(-1)
+		
+		for key : String in FILE_CHARACTER_REPLACEMENT.keys():
+			title = title.replace(key, FILE_CHARACTER_REPLACEMENT[key])
+		
+		return title
+		
+	else:
+		print("is not playlist")
+		return ""
+
+func create_request(progress_hook : Dictionary, using_audio : bool , args : Array[String], binary : Binary = Binary.YTDLP, console : bool = false, print_output : bool = false, block : bool = true, print_input : bool = false, id : int = 0):
+	print("run progress_hook")
+	
+	
+	var runtime_info : Dictionary = run(args, binary, console, print_output, block, print_input)
+	update_progress(runtime_info, progress_hook, using_audio)
 	return progress_hook
+
+var current_hook : Dictionary
+
+func request_queue():
+	print("request a: ", queue.size() == 0, " ", current_hook.has("done") and current_hook["done"] == false)
+	
+	if queue.size() == 0 or (current_hook.has("done") and current_hook["done"] == false): 
+		print("queue is currently active! waiting..")
+		return
+	
+	var next : Callable = queue.pop_front()
+	var hook : Dictionary = next.call() 
+	
+	current_request = next
+	current_hook = hook
+	print("aa")
+	new_hook.emit(hook, next)
+	##await Util.wait(5.0)
+	#current_hook["done"] = true
+
 
 func KILL_ALL_CHILDREN(): # MWHAHAHAHAHAHAHHA!!!
 	for pid : int in child_processes_ids:

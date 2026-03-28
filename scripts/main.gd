@@ -22,7 +22,9 @@ const DEFAULT_OPACITY : float = 0.9
 @onready var mute: Button = %Mute
 @onready var background: Panel = %Background
 @onready var queue_completion: ProgressBar = %QueueCompletion
+@onready var queue_node: MarginContainer = %Queue
 @onready var download_completion: ProgressBar = %DownloadCompletion
+@onready var queue_container: VBoxContainer = %QueueContainer
 
 
 var first_press : bool = true
@@ -48,6 +50,10 @@ var settings : Dictionary[String, String]
 func _ready() -> void:
 	attempt_clipboard_link_paste()
 	load_settings()
+	
+	YTDLP.new_hook.connect(_on_new_hook)
+	YTDLP.main = self
+	
 	get_window().size = SETTINGS_WINDOWS_SIZE
 	await get_tree().process_frame
 	get_window().size = DEFAULT_WINDOWS_SIZE
@@ -75,7 +81,6 @@ func load_settings():
 	disable_animations_check.button_pressed = disable_animations
 	set_backgorund_alpha(1.0 if disable_animations else DEFAULT_OPACITY)
 	
-	
 	for selector : SingleSelectContainer in selectors:
 		var starting_setting : String = File.load_var(selector.update_id, selector.default_pressed_id)
 		selector.update_button_state(starting_setting)
@@ -89,7 +94,6 @@ func attempt_clipboard_link_paste():
 
 func set_backgorund_alpha(to : float):
 	background.get_theme_stylebox("panel").bg_color.a = to
-
 
 func _on_audio_pressed() -> void:
 	if video.button_pressed and audio.button_pressed and not first_press:
@@ -123,10 +127,10 @@ func _on_mute_pressed() -> void:
 	using_audio = !using_audio
 
 func _on_settings_pressed() -> void:
+	print("s")
 	var tween : Tween = create_tween()
 	
 	settings_open = !settings_open
-	
 	
 	if not settings_open:
 		tween.set_parallel()
@@ -141,12 +145,27 @@ func _on_settings_pressed() -> void:
 		else:
 			settings_animations.play("hide", -1, 1000.0)
 		
+		if queue_open:
+			#await tween.finished
+			print("SHAOWING")
+			queue_container.show()
+			queue_node.show()
+			Util.tween(queue_container, "modulate:a", 1.0, 0.5, Tween.EASE_OUT, Tween.TRANS_CUBIC)
+			await tween.finished
+			set_window_vertical(DEFAULT_WINDOWS_SIZE.y + (min(MAX_QUEUE_VISIBLE_ENTRIES, YTDLP.queue.size() if prev_queue_size < YTDLP.queue.size() else YTDLP.queue.size()) + 1) * QUEUE_ADDITIONAL_HEIGHT + 10, true, 0.5)
+			#update_queue_visual()
+		
 		
 	else:
 		goin_up = get_window().position.y > DisplayServer.screen_get_size().y- SETTINGS_WINDOWS_SIZE.y
 		
-		if goin_up: tween.tween_property(get_window(), "position:y", get_window().position.y - SETTINGS_WINDOWS_SIZE.y + 140.0, ANIMATION_SPEED if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		if goin_up: 
+			tween.tween_property(get_window(), "position:y", get_window().position.y - SETTINGS_WINDOWS_SIZE.y + 140.0, ANIMATION_SPEED if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		#if not queue_open:
 		tween.tween_property(get_window(), "size", SETTINGS_WINDOWS_SIZE, ANIMATION_SPEED if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		#else:
+			#update_queue_visual()
+		
 		if goin_up and not disable_animations: await Util.wait(ANIMATION_SPEED)
 			#tween.tween_property(get_window(), "position:y", SETTINGS_WINDOWS_SIZE.y + 80, 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		
@@ -156,6 +175,11 @@ func _on_settings_pressed() -> void:
 			settings_animations.play("show")
 		else:
 			settings_animations.play("show", -1, 1000.0)
+		
+		if queue_open:
+			Util.tween(queue_container, "modulate:a", 0.0, 0.5, Tween.EASE_OUT, Tween.TRANS_CUBIC).tween_callback(queue_container.hide)
+			
+			
 	
 
 	#tween.tween_method(DisplayServer.window_set_size, DisplayServer.window_get_size(), SETTINGS_WINDOWS_SIZE, 0.75).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
@@ -216,15 +240,32 @@ func _on_link_submitted(_a = null) -> void:
 	var hook : Dictionary = YTDLP.DEFAULT_PROGRESS_HOOK.duplicate()
 	
 	if using_video:
-		link_entry.text = ""
-		YTDLP.download_video(link, output_path, title_format, settings["video_format"], settings["video_quality"], not using_audio, hook)
-		update_progress_bars(hook)
+		#link_entry.text = ""
+		var item : Callable = YTDLP.download_video(link, output_path, title_format, settings["video_format"], settings["video_quality"], not using_audio, hook)
+		add_queue_item(item)
+		update_queue_visual()
+		#update_progress_bars(hook)
 		
 	elif using_audio:
-		link_entry.text = ""
-		YTDLP.download_audio(link, output_path, title_format, settings["audio_format"], settings["audio_quality"], hook)
-		update_progress_bars(hook)
+		#link_entry.text = ""
+		var item : Callable = YTDLP.download_audio(link, output_path, title_format, settings["audio_format"], settings["audio_quality"], hook)
+		add_queue_item(item)
+		update_queue_visual()
+		#update_progress_bars(hook)
 	
+func add_queue_item(item : Callable):
+	var inst = QUEUE_ENTRY.instantiate()
+	
+	inst.item = item
+	queue_container.add_child(inst)
+
+func _on_new_hook(hook : Dictionary, callable : Callable):
+	print("b")
+	print("start listen")
+	await update_progress_bars(hook)
+	print("stop listen")
+	update_queue_visual()
+	YTDLP.request_queue()
 
 const DOWNLOAD_COMPLETION_SNAPPINESS = 2.0
 func update_progress_bars(hook : Dictionary):
@@ -259,15 +300,66 @@ func update_progress_bars(hook : Dictionary):
 			download_completion.indeterminate = false
 		
 		prev_current = hook["current"]
+		
 		await get_tree().process_frame
 		
 	Util.tween(download_completion, "value", download_completion.max_value, 1.0, Tween.EASE_OUT, Tween.TRANS_CUBIC)
 	Util.tween(queue_completion, "value", queue_completion.max_value, 1.0, Tween.EASE_OUT, Tween.TRANS_CUBIC)
 	
 	ui_animations.play("fade_progress", -1, 0.4)
+	progress_leave()
+
+func progress_leave():
 	await ui_animations.animation_finished
 	download_completion.value = 0.0
 	queue_completion.value = 0.0
+
+var queue_open : bool = false
+const QUEUE_ADDITIONAL_HEIGHT : int = 26
+const MAX_QUEUE_VISIBLE_ENTRIES : int = 5
+const QUEUE_ENTRY = preload("uid://f81lwmrrm2w7")
+var prev_queue_size : int  = -1
+
+func update_queue_visual():
+	var shown : Array[Callable] = YTDLP.queue.duplicate()
+	#if YTDLP.current_request != null:
+		#shown.insert(0, YTDLP.current_request)
+	if shown.size() == 0:
+		queue_node.hide()
+	
+	if shown.size() > 0 and not settings_open:
+		if not queue_open:
+			queue_open = true
+			queue_container.show()
+			queue_node.show()
+			queue_container.modulate.a = 0.0
+			Util.tween(queue_container, "modulate:a", 1.0, 0.5, Tween.EASE_OUT, Tween.TRANS_CUBIC)
+			
+		await Util.sleep(0.25)
+		prev_queue_size = shown.size()
+		set_window_vertical(DEFAULT_WINDOWS_SIZE.y + (min(MAX_QUEUE_VISIBLE_ENTRIES, shown.size() if prev_queue_size < shown.size() else shown.size()) + 1) * QUEUE_ADDITIONAL_HEIGHT + 10, true, 0.5)
+		
+	elif queue_open:
+		queue_open = false
+		Util.tween(queue_container, "modulate:a", 0.0, 0.5, Tween.EASE_OUT, Tween.TRANS_CUBIC).tween_callback(queue_container.hide)
+		if not settings_open:
+			set_window_vertical()
+	
+	prev_queue_size = shown.size()
+		
+		
+
+func set_window_vertical(to : int = DEFAULT_WINDOWS_SIZE.y, one_motion: bool = false, speed_multiplier : float = 1.0):
+	var tween : Tween = create_tween()
+	if one_motion:
+		tween.set_parallel()
+	
+	if get_window().position.y > DisplayServer.screen_get_size().y- to - 30:
+		tween.tween_property(get_window(), "position:y", get_window().position.y - to + get_window().size.y - 30, ANIMATION_SPEED * speed_multiplier if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	
+	tween.tween_property(get_window(), "size:y", to, ANIMATION_SPEED * speed_multiplier if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+		
+		
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_IN:

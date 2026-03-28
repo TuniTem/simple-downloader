@@ -136,231 +136,21 @@ border_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 10
 corner_detail = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig7tw"]
-content_margin_left = 0.0
-content_margin_top = 0.0
-content_margin_right = 0.0
-content_margin_bottom = 0.0
-bg_color = Color(0.12941177, 0.06666667, 0.12941177, 0.90588236)
-corner_detail = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.8901961, 0.5411765, 0.7254902, 1)
+corner_detail = 6
 
-[sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
-font = ExtResource("4_lquwl")
-font_size = 10
-font_color = Color(0.54901963, 0.42745098, 0.654902, 1)
-shadow_offset = Vector2(2, 2)
-
-[sub_resource type="Animation" id="Animation_choun"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer/Control/Settings:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("VBoxContainer:modulate")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_ya4ey"]
-resource_name = "audio"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(0.4061261, 1),
-"update": 0,
-"values": [0, -32]
-}
-
-[sub_resource type="Animation" id="Animation_jyhfs"]
-resource_name = "audio_back"
-length = 0.25
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(0.4061261, 0.4061261),
-"update": 0,
-"values": [-32, 0]
-}
-
-[sub_resource type="Animation" id="Animation_jkv2x"]
-resource_name = "fade_progress"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("VBoxContainer:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_o6xl0"]
-resource_name = "gear_ccw"
-length = 0.75
-step = 0.05
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/Control/Settings:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.75),
-"transitions": PackedFloat32Array(0.45062527, 0.45062527),
-"update": 0,
-"values": [6.283185307179586, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_tipki"]
-resource_name = "gear_cw"
-length = 0.75
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MarginContainer/Control/Settings:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.75),
-"transitions": PackedFloat32Array(0.45062527, 1),
-"update": 0,
-"values": [0.0, 6.283185307179586]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
-_data = {
-&"RESET": SubResource("Animation_choun"),
-&"audio": SubResource("Animation_ya4ey"),
-&"audio_back": SubResource("Animation_jyhfs"),
-&"fade_progress": SubResource("Animation_jkv2x"),
-&"gear_ccw": SubResource("Animation_o6xl0"),
-&"gear_cw": SubResource("Animation_tipki")
-}
-
-[sub_resource type="Animation" id="Animation_eb6dy"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_a8y0u"]
-resource_name = "hide"
-step = 0.05
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(1),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"hide"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.35),
-"transitions": PackedFloat32Array(0.34151018, 0.2871747),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(0.41568628, 0, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_trceg"]
-resource_name = "show"
-step = 0.05
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"show"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.31, 1),
-"transitions": PackedFloat32Array(0.2871747, 1),
-"update": 0,
-"values": [Color(0.41568628, 0, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8y0u"]
-_data = {
-&"RESET": SubResource("Animation_eb6dy"),
-&"hide": SubResource("Animation_a8y0u"),
-&"show": SubResource("Animation_trceg")
-}
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp3eg"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.9490196, 0.6, 1)
+corner_detail = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_muem4"]
 content_margin_left = 4.0
@@ -447,21 +237,231 @@ thickness = 2
 
 [sub_resource type="ImageTexture" id="ImageTexture_jscy8"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(0.8901961, 0.5411765, 0.7254902, 1)
-corner_detail = 6
+[sub_resource type="LabelSettings" id="LabelSettings_7mycd"]
+font = ExtResource("4_lquwl")
+font_size = 10
+font_color = Color(0.54901963, 0.42745098, 0.654902, 1)
+shadow_offset = Vector2(2, 2)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dp3eg"]
-content_margin_left = 2.0
-content_margin_top = 2.0
-content_margin_right = 2.0
-content_margin_bottom = 2.0
-bg_color = Color(1, 0.9490196, 0.6, 1)
-corner_detail = 6
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig7tw"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.12941177, 0.06666667, 0.12941177, 0.90588236)
+corner_detail = 10
+
+[sub_resource type="Animation" id="Animation_choun"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SettingsButtonHolder/Control/Settings:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ProgressBars:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ya4ey"]
+resource_name = "audio"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.4061261, 1),
+"update": 0,
+"values": [0, -32]
+}
+
+[sub_resource type="Animation" id="Animation_jyhfs"]
+resource_name = "audio_back"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(0.4061261, 0.4061261),
+"update": 0,
+"values": [-32, 0]
+}
+
+[sub_resource type="Animation" id="Animation_jkv2x"]
+resource_name = "fade_progress"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ProgressBars:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_o6xl0"]
+resource_name = "gear_ccw"
+length = 0.75
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsButtonHolder/Control/Settings:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(0.45062527, 0.45062527),
+"update": 0,
+"values": [6.283185307179586, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_tipki"]
+resource_name = "gear_cw"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SettingsButtonHolder/Control/Settings:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(0.45062527, 1),
+"update": 0,
+"values": [0.0, 6.283185307179586]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb6dy"]
+_data = {
+&"RESET": SubResource("Animation_choun"),
+&"audio": SubResource("Animation_ya4ey"),
+&"audio_back": SubResource("Animation_jyhfs"),
+&"fade_progress": SubResource("Animation_jkv2x"),
+&"gear_ccw": SubResource("Animation_o6xl0"),
+&"gear_cw": SubResource("Animation_tipki")
+}
+
+[sub_resource type="Animation" id="Animation_eb6dy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Settings:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_a8y0u"]
+resource_name = "hide"
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Settings")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Settings:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.35),
+"transitions": PackedFloat32Array(0.34151018, 0.2871747),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.41568628, 0, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_trceg"]
+resource_name = "show"
+step = 0.05
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Settings")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"show"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Settings:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.31, 1),
+"transitions": PackedFloat32Array(0.2871747, 1),
+"update": 0,
+"values": [Color(0.41568628, 0, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a8y0u"]
+_data = {
+&"RESET": SubResource("Animation_eb6dy"),
+&"hide": SubResource("Animation_a8y0u"),
+&"show": SubResource("Animation_trceg")
+}
 
 [node name="Main" type="Control" unique_id=2033234185 node_paths=PackedStringArray("selectors")]
 layout_mode = 3
@@ -472,7 +472,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_6tbv5")
-selectors = [NodePath("Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector"), NodePath("Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector"), NodePath("Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector"), NodePath("Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector")]
+selectors = [NodePath("Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector"), NodePath("Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector"), NodePath("Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector"), NodePath("Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector")]
 
 [node name="LinkUI" type="MarginContainer" parent="." unique_id=1858048596]
 unique_name_in_owner = true
@@ -612,46 +612,52 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "Video  🎞️"
 
-[node name="Background" type="Panel" parent="." unique_id=261516055]
+[node name="ProgressBars" type="VBoxContainer" parent="." unique_id=741289745]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 4.0
+grow_horizontal = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="ProgressBars" unique_id=429264404]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="DownloadCompletion" type="ProgressBar" parent="ProgressBars/Control" unique_id=264458540]
 unique_name_in_owner = true
-z_index = -2
+z_index = 2
+layout_mode = 0
+offset_top = -2.0
+offset_right = 576.0
+offset_bottom = 2.0
+theme = ExtResource("3_1bvp3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0ld40")
+max_value = 1.0
+step = 9.999999999999999e-05
+show_percentage = false
+
+[node name="Control2" type="Control" parent="ProgressBars" unique_id=1637823135]
+clip_contents = true
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="QueueCompletion" type="ProgressBar" parent="ProgressBars/Control2" unique_id=130048050]
+unique_name_in_owner = true
+z_index = 3
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
+theme = ExtResource("3_1bvp3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dp3eg")
+step = 0.001
+show_percentage = false
 
-[node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1188661788]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -12.0
-offset_right = 139.0
-grow_vertical = 0
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_bottom = -1
-
-[node name="Label" type="Label" parent="MarginContainer2" unique_id=398519284]
-modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.54901963, 0.42745098, 0.654902, 1)
-text = "Made by TuniTem with 💜"
-label_settings = SubResource("LabelSettings_7mycd")
-vertical_alignment = 2
-
-[node name="UIAnimations" type="AnimationPlayer" parent="." unique_id=272794824]
-unique_name_in_owner = true
-libraries/ = SubResource("AnimationLibrary_eb6dy")
-
-[node name="SettingsAnimations" type="AnimationPlayer" parent="." unique_id=679468537]
-unique_name_in_owner = true
-libraries/ = SubResource("AnimationLibrary_a8y0u")
-
-[node name="Control" type="Control" parent="." unique_id=676586434]
+[node name="Settings" type="Control" parent="." unique_id=676586434]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -661,7 +667,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=2018015654]
+[node name="MarginContainer" type="MarginContainer" parent="Settings" unique_id=2018015654]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -674,26 +680,26 @@ theme_override_constants/margin_top = 80
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/MarginContainer" unique_id=1547148710]
+[node name="VBoxContainer" type="VBoxContainer" parent="Settings/MarginContainer" unique_id=1547148710]
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=1351911134]
+[node name="MarginContainer" type="MarginContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=1351911134]
 layout_mode = 2
 theme_override_constants/margin_top = -2
 theme_override_constants/margin_bottom = -4
 
-[node name="OutputFolder" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/MarginContainer" unique_id=1277778236]
+[node name="OutputFolder" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/MarginContainer" unique_id=1277778236]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder" unique_id=1600598851]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder" unique_id=1600598851]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "output folder"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="OutputFolder" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder" unique_id=1466085367]
+[node name="OutputFolder" type="LineEdit" parent="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder" unique_id=1466085367]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
@@ -717,7 +723,7 @@ draw_control_chars = true
 virtual_keyboard_enabled = false
 caret_blink = true
 
-[node name="FindFile" type="Button" parent="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" unique_id=1966564144]
+[node name="FindFile" type="Button" parent="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" unique_id=1966564144]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 1
 anchors_preset = 6
@@ -742,7 +748,7 @@ icon = ExtResource("6_ya4ey")
 icon_alignment = 1
 expand_icon = true
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder/FindFile" unique_id=1564316522]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder/FindFile" unique_id=1564316522]
 z_index = 1
 layout_mode = 1
 anchors_preset = 9
@@ -752,22 +758,22 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=1462721945]
+[node name="MarginContainer2" type="MarginContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=1462721945]
 layout_mode = 2
 theme_override_constants/margin_top = -4
 theme_override_constants/margin_bottom = -4
 
-[node name="TitleFormat" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/MarginContainer2" unique_id=2120492151]
+[node name="TitleFormat" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/MarginContainer2" unique_id=2120492151]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat" unique_id=707189824]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat" unique_id=707189824]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "title format"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="TitleFormat" type="LineEdit" parent="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat" unique_id=1053383427]
+[node name="TitleFormat" type="LineEdit" parent="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat" unique_id=1053383427]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
@@ -791,7 +797,7 @@ draw_control_chars = true
 virtual_keyboard_enabled = false
 caret_blink = true
 
-[node name="TitleFormatReset" type="Button" parent="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" unique_id=1090263492]
+[node name="TitleFormatReset" type="Button" parent="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" unique_id=1090263492]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 1
 anchors_preset = 6
@@ -816,7 +822,7 @@ icon = ExtResource("7_eb6dy")
 icon_alignment = 1
 expand_icon = true
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat/TitleFormatReset" unique_id=2091047779]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat/TitleFormatReset" unique_id=2091047779]
 z_index = 1
 layout_mode = 1
 anchors_preset = 9
@@ -826,23 +832,23 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="VSeparator2" type="HSeparator" parent="Control/MarginContainer/VBoxContainer" unique_id=1102016234]
+[node name="VSeparator2" type="HSeparator" parent="Settings/MarginContainer/VBoxContainer" unique_id=1102016234]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_choun")
 
-[node name="VideoFormat" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=911082945]
+[node name="VideoFormat" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=911082945]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/VideoFormat" unique_id=664217026]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/VideoFormat" unique_id=664217026]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "video format"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="VideoFormatSelector" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/VideoFormat" unique_id=963745113]
+[node name="VideoFormatSelector" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/VideoFormat" unique_id=963745113]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -852,11 +858,11 @@ script = ExtResource("5_tipki")
 default_pressed_id = "mp4"
 update_id = "video_format"
 
-[node name="Original" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1584135889]
+[node name="Original" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1584135889]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="video_original" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Original" unique_id=387606246]
+[node name="video_original" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Original" unique_id=387606246]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -873,7 +879,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_eb6dy")
 toggle_mode = true
 text = "original"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Original" unique_id=1469037158]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Original" unique_id=1469037158]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -886,11 +892,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="MP4" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=2084893741]
+[node name="MP4" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=2084893741]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MP4" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MP4" unique_id=1921317570]
+[node name="MP4" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MP4" unique_id=1921317570]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -907,7 +913,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "mp4"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MP4" unique_id=924843704]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MP4" unique_id=924843704]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -920,11 +926,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="MKV" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1522964371]
+[node name="MKV" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1522964371]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MKV" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MKV" unique_id=442079595]
+[node name="MKV" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MKV" unique_id=442079595]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -941,7 +947,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "mkv"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MKV" unique_id=1351378558]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/MKV" unique_id=1351378558]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -954,12 +960,12 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="AVI" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=913457923]
+[node name="AVI" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=913457923]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="AVI" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/AVI" unique_id=1302272521]
+[node name="AVI" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/AVI" unique_id=1302272521]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -976,7 +982,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "avi"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/AVI" unique_id=1316569033]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/AVI" unique_id=1316569033]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -989,11 +995,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="Webm" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1448415833]
+[node name="Webm" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" unique_id=1448415833]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Webm" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Webm" unique_id=1049777606]
+[node name="Webm" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector/Webm" unique_id=1049777606]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1013,17 +1019,17 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "webm"
 
-[node name="VideoQuality" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=1739261406]
+[node name="VideoQuality" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=1739261406]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/VideoQuality" unique_id=426574025]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/VideoQuality" unique_id=426574025]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "video quality"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="VideoQualitySelector" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/VideoQuality" unique_id=1880162169]
+[node name="VideoQualitySelector" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/VideoQuality" unique_id=1880162169]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1033,11 +1039,11 @@ script = ExtResource("5_tipki")
 default_pressed_id = "max"
 update_id = "video_quality"
 
-[node name="Max" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=895233130]
+[node name="Max" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=895233130]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Max" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/Max" unique_id=1319330525]
+[node name="Max" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/Max" unique_id=1319330525]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1054,7 +1060,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_eb6dy")
 toggle_mode = true
 text = "max"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/Max" unique_id=2128811150]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/Max" unique_id=2128811150]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1067,11 +1073,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="4k" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1078152065]
+[node name="4k" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1078152065]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="4k" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/4k" unique_id=182153722]
+[node name="4k" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/4k" unique_id=182153722]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1088,7 +1094,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "4k"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/4k" unique_id=2144141935]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/4k" unique_id=2144141935]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1101,11 +1107,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="1440p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1216626203]
+[node name="1440p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1216626203]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="1440p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1440p" unique_id=1163770399]
+[node name="1440p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1440p" unique_id=1163770399]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1122,7 +1128,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "1440p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1440p" unique_id=494367876]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1440p" unique_id=494367876]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1135,11 +1141,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="1080p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1706533933]
+[node name="1080p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1706533933]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="1080p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1080p" unique_id=782065517]
+[node name="1080p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1080p" unique_id=782065517]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1156,7 +1162,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "1080p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1080p" unique_id=1192139995]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/1080p" unique_id=1192139995]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1169,11 +1175,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="720p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=735904945]
+[node name="720p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=735904945]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="720p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/720p" unique_id=1785296731]
+[node name="720p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/720p" unique_id=1785296731]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1190,7 +1196,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "720p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/720p" unique_id=1771484078]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/720p" unique_id=1771484078]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1203,11 +1209,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="480p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=444014144]
+[node name="480p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=444014144]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="480p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/480p" unique_id=1393079844]
+[node name="480p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/480p" unique_id=1393079844]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1224,7 +1230,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "480p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/480p" unique_id=230093891]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/480p" unique_id=230093891]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1237,11 +1243,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="360p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=342362597]
+[node name="360p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=342362597]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="360p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/360p" unique_id=658828626]
+[node name="360p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/360p" unique_id=658828626]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1258,7 +1264,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "360p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/360p" unique_id=654513248]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/360p" unique_id=654513248]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1271,11 +1277,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="240p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1354712045]
+[node name="240p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1354712045]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="240p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/240p" unique_id=1870298736]
+[node name="240p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/240p" unique_id=1870298736]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1292,7 +1298,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "240p"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/240p" unique_id=1633110478]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/240p" unique_id=1633110478]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1305,11 +1311,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="144p" type="Control" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1457615228]
+[node name="144p" type="Control" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" unique_id=1457615228]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="144p" type="Button" parent="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/144p" unique_id=1137315089]
+[node name="144p" type="Button" parent="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector/144p" unique_id=1137315089]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1329,23 +1335,23 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "144p"
 
-[node name="VSeparator" type="HSeparator" parent="Control/MarginContainer/VBoxContainer" unique_id=1063861400]
+[node name="VSeparator" type="HSeparator" parent="Settings/MarginContainer/VBoxContainer" unique_id=1063861400]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_choun")
 
-[node name="AudioFormat" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=603465448]
+[node name="AudioFormat" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=603465448]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/AudioFormat" unique_id=1757025238]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/AudioFormat" unique_id=1757025238]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "audio format"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="AudioFormatSelector" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/AudioFormat" unique_id=1600642100]
+[node name="AudioFormatSelector" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/AudioFormat" unique_id=1600642100]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1355,11 +1361,11 @@ script = ExtResource("5_tipki")
 default_pressed_id = "mp3"
 update_id = "audio_format"
 
-[node name="Original" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=1613713307]
+[node name="Original" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=1613713307]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="audio_original" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Original" unique_id=1631300405]
+[node name="audio_original" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Original" unique_id=1631300405]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1376,7 +1382,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_eb6dy")
 toggle_mode = true
 text = "original"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Original" unique_id=1522960014]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Original" unique_id=1522960014]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1389,11 +1395,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="MP3" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=351905778]
+[node name="MP3" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=351905778]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="MP3" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/MP3" unique_id=273173216]
+[node name="MP3" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/MP3" unique_id=273173216]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1410,7 +1416,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "mp3"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/MP3" unique_id=368231212]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/MP3" unique_id=368231212]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1423,11 +1429,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="Wav" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=995440624]
+[node name="Wav" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=995440624]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Wav" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Wav" unique_id=1611948167]
+[node name="Wav" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Wav" unique_id=1611948167]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1444,7 +1450,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "wav"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Wav" unique_id=347303282]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/Wav" unique_id=347303282]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1457,11 +1463,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="OGG" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=2087400571]
+[node name="OGG" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=2087400571]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="OGG" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/OGG" unique_id=1278517115]
+[node name="OGG" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/OGG" unique_id=1278517115]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1478,7 +1484,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "ogg"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/OGG" unique_id=936145532]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/OGG" unique_id=936145532]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1491,11 +1497,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="FLAC" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=1318329907]
+[node name="FLAC" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" unique_id=1318329907]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="FLAC" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/FLAC" unique_id=899954594]
+[node name="FLAC" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector/FLAC" unique_id=899954594]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1515,17 +1521,17 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "flac"
 
-[node name="AudioQuality" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=2008235830]
+[node name="AudioQuality" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=2008235830]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/MarginContainer/VBoxContainer/AudioQuality" unique_id=1221660220]
+[node name="Label" type="Label" parent="Settings/MarginContainer/VBoxContainer/AudioQuality" unique_id=1221660220]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "audio quality"
 label_settings = ExtResource("5_choun")
 horizontal_alignment = 1
 
-[node name="AudioQualitySelector" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/AudioQuality" unique_id=1004811746]
+[node name="AudioQualitySelector" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/AudioQuality" unique_id=1004811746]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1535,11 +1541,11 @@ script = ExtResource("5_tipki")
 default_pressed_id = "320kbs"
 update_id = "audio_quality"
 
-[node name="320kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1278840765]
+[node name="320kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1278840765]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="320kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/320kbps" unique_id=595486170]
+[node name="320kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/320kbps" unique_id=595486170]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1556,7 +1562,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_eb6dy")
 toggle_mode = true
 text = "320kb/s"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/320kbps" unique_id=572368403]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/320kbps" unique_id=572368403]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1569,11 +1575,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="256kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1843484871]
+[node name="256kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1843484871]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="256kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/256kbps" unique_id=1576875798]
+[node name="256kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/256kbps" unique_id=1576875798]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1590,7 +1596,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "256kb/s"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/256kbps" unique_id=353536034]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/256kbps" unique_id=353536034]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1603,11 +1609,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="128kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=604645283]
+[node name="128kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=604645283]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="128kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/128kbps" unique_id=1442436636]
+[node name="128kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/128kbps" unique_id=1442436636]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1624,7 +1630,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "128kb/s"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/128kbps" unique_id=1473290085]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/128kbps" unique_id=1473290085]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1637,11 +1643,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="96kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1238749248]
+[node name="96kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1238749248]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="96kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/96kbps" unique_id=1541588753]
+[node name="96kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/96kbps" unique_id=1541588753]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1658,7 +1664,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "96kb/s"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/96kbps" unique_id=1382967824]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/96kbps" unique_id=1382967824]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1671,11 +1677,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="64kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=2051164946]
+[node name="64kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=2051164946]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="64kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/64kbps" unique_id=305053446]
+[node name="64kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/64kbps" unique_id=305053446]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1692,7 +1698,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_a8y0u")
 toggle_mode = true
 text = "64kb/s"
 
-[node name="VSeparator" type="VSeparator" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/64kbps" unique_id=378003432]
+[node name="VSeparator" type="VSeparator" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/64kbps" unique_id=378003432]
 z_index = 1
 layout_mode = 1
 anchors_preset = 11
@@ -1705,11 +1711,11 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="8kbps" type="Control" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1358026860]
+[node name="8kbps" type="Control" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" unique_id=1358026860]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="8kbps" type="Button" parent="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/8kbps" unique_id=1258460351]
+[node name="8kbps" type="Button" parent="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector/8kbps" unique_id=1258460351]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1726,30 +1732,30 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "8kb/s"
 
-[node name="VSeparator3" type="HSeparator" parent="Control/MarginContainer/VBoxContainer" unique_id=908797345]
+[node name="VSeparator3" type="HSeparator" parent="Settings/MarginContainer/VBoxContainer" unique_id=908797345]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_eb6dy")
 
-[node name="MarginContainer3" type="MarginContainer" parent="Control/MarginContainer/VBoxContainer" unique_id=589114500]
+[node name="MarginContainer3" type="MarginContainer" parent="Settings/MarginContainer/VBoxContainer" unique_id=589114500]
 layout_mode = 2
 theme_override_constants/margin_top = -2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/MarginContainer3" unique_id=89140505]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3" unique_id=89140505]
 layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer" unique_id=190508852]
+[node name="HBoxContainer" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer" unique_id=190508852]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label2" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer" unique_id=623397920]
+[node name="Label2" type="Label" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer" unique_id=623397920]
 layout_mode = 2
 text = "remove polish"
 label_settings = ExtResource("5_choun")
 
-[node name="DisableAnimationsCheck" type="CheckBox" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer" unique_id=1161554864]
+[node name="DisableAnimationsCheck" type="CheckBox" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer" unique_id=1161554864]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
@@ -1757,16 +1763,16 @@ theme = ExtResource("6_85g3d")
 theme_override_icons/checked = SubResource("ImageTexture_yc10j")
 theme_override_icons/unchecked = SubResource("ImageTexture_jscy8")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer" unique_id=456306145]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer" unique_id=456306145]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Label2" type="Label" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=2140543595]
+[node name="Label2" type="Label" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=2140543595]
 layout_mode = 2
 text = "create directory for playlists"
 label_settings = ExtResource("5_choun")
 
-[node name="DisableAnimationsCheck" type="CheckBox" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=441372797]
+[node name="DisableAnimationsCheck" type="CheckBox" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=441372797]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 theme = ExtResource("6_85g3d")
@@ -1774,23 +1780,55 @@ theme_override_icons/checked = SubResource("ImageTexture_yc10j")
 theme_override_icons/unchecked = SubResource("ImageTexture_jscy8")
 button_pressed = true
 
-[node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=964319980]
+[node name="Control" type="Control" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2" unique_id=964319980]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2/Control" unique_id=123316029]
+[node name="Control" type="Control" parent="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2/Control" unique_id=123316029]
 anchors_preset = 0
 offset_right = 10.0
 offset_bottom = 10.0
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=339609915]
+[node name="Watermark" type="MarginContainer" parent="." unique_id=1188661788]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -13.0
+offset_right = 139.0
+grow_vertical = 0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_bottom = -1
+
+[node name="Label" type="Label" parent="Watermark" unique_id=398519284]
+modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54901963, 0.42745098, 0.654902, 1)
+text = "Made by TuniTem with 💜"
+label_settings = SubResource("LabelSettings_7mycd")
+vertical_alignment = 2
+
+[node name="Background" type="Panel" parent="." unique_id=261516055]
+unique_name_in_owner = true
+z_index = -2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ig7tw")
+
+[node name="SettingsButtonHolder" type="MarginContainer" parent="." unique_id=339609915]
+z_index = 36
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -35.0
-offset_top = -35.0
+offset_left = -45.0
+offset_top = -45.0
 grow_horizontal = 0
 grow_vertical = 0
 size_flags_horizontal = 8
@@ -1798,11 +1836,11 @@ size_flags_vertical = 8
 theme_override_constants/margin_right = 13
 theme_override_constants/margin_bottom = 13
 
-[node name="Control" type="Control" parent="MarginContainer" unique_id=87208937]
+[node name="Control" type="Control" parent="SettingsButtonHolder" unique_id=87208937]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 
-[node name="Settings" parent="MarginContainer/Control" unique_id=1230669871 instance=ExtResource("2_7mycd")]
+[node name="Settings" parent="SettingsButtonHolder/Control" unique_id=1230669871 instance=ExtResource("2_7mycd")]
 z_index = 2
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 0
@@ -1815,7 +1853,7 @@ texture = ExtResource("10_ya4ey")
 stretch_mode = 5
 toggle_mode = true
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer" unique_id=1194335746]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsButtonHolder" unique_id=1194335746]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = -3
@@ -1823,72 +1861,53 @@ theme_override_constants/margin_top = -3
 theme_override_constants/margin_right = -3
 theme_override_constants/margin_bottom = -3
 
-[node name="Panel" type="Panel" parent="MarginContainer/MarginContainer" unique_id=1087108492]
+[node name="Panel" type="Panel" parent="SettingsButtonHolder/MarginContainer" unique_id=1087108492]
 z_index = -1
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = ExtResource("6_o6xl0")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=741289745]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 4.0
-grow_horizontal = 2
-theme_override_constants/separation = 0
-
-[node name="Control" type="Control" parent="VBoxContainer" unique_id=429264404]
-clip_contents = true
-custom_minimum_size = Vector2(0, 2)
-layout_mode = 2
-
-[node name="DownloadCompletion" type="ProgressBar" parent="VBoxContainer/Control" unique_id=264458540]
+[node name="UIAnimations" type="AnimationPlayer" parent="." unique_id=272794824]
 unique_name_in_owner = true
-z_index = 2
+libraries/ = SubResource("AnimationLibrary_eb6dy")
+
+[node name="SettingsAnimations" type="AnimationPlayer" parent="." unique_id=679468537]
+unique_name_in_owner = true
+libraries/ = SubResource("AnimationLibrary_a8y0u")
+
+[node name="Queue" type="MarginContainer" parent="." unique_id=1429771441]
+unique_name_in_owner = true
 layout_mode = 0
-offset_top = -2.0
-offset_right = 576.0
-offset_bottom = 2.0
-theme = ExtResource("3_1bvp3")
-theme_override_styles/fill = SubResource("StyleBoxFlat_0ld40")
-max_value = 1.0
-step = 9.999999999999999e-05
-show_percentage = false
+offset_left = 10.0
+offset_top = 83.0
+offset_right = 566.0
+offset_bottom = 83.0
+size_flags_vertical = 8
+mouse_filter = 2
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_bottom = -85
 
-[node name="Control2" type="Control" parent="VBoxContainer" unique_id=1637823135]
-clip_contents = true
-custom_minimum_size = Vector2(0, 2)
-layout_mode = 2
-
-[node name="QueueCompletion" type="ProgressBar" parent="VBoxContainer/Control2" unique_id=130048050]
+[node name="QueueContainer" type="VBoxContainer" parent="Queue" unique_id=1947627900]
 unique_name_in_owner = true
-z_index = 3
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("3_1bvp3")
-theme_override_styles/fill = SubResource("StyleBoxFlat_dp3eg")
-step = 0.001
-show_percentage = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
 
 [connection signal="text_submitted" from="LinkUI/VBoxContainer/LinkEntry" to="." method="_on_link_submitted"]
 [connection signal="pressed" from="LinkUI/VBoxContainer/LinkEntry/Submit" to="." method="_on_link_submitted"]
 [connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/MarginContainer/Mute" to="." method="_on_mute_pressed"]
 [connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/HBoxContainer/Audio" to="." method="_on_audio_pressed"]
 [connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/HBoxContainer/Video" to="." method="_on_video_pressed"]
-[connection signal="focus_exited" from="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
-[connection signal="text_submitted" from="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
-[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder/FindFile" to="." method="_on_find_file_pressed"]
-[connection signal="focus_exited" from="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" to="." method="_on_title_format_text_submitted"]
-[connection signal="text_submitted" from="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" to="." method="_on_title_format_text_submitted"]
-[connection signal="pressed" from="Control/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat/TitleFormatReset" to="." method="_on_title_format_reset_pressed"]
-[connection signal="selection_updated" from="Control/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" to="." method="_on_setting_selection_updated"]
-[connection signal="selection_updated" from="Control/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" to="." method="_on_setting_selection_updated"]
-[connection signal="selection_updated" from="Control/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" to="." method="_on_setting_selection_updated"]
-[connection signal="selection_updated" from="Control/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" to="." method="_on_setting_selection_updated"]
-[connection signal="toggled" from="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer/DisableAnimationsCheck" to="." method="_on_disable_animations_check_toggled"]
-[connection signal="toggled" from="Control/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2/DisableAnimationsCheck" to="." method="_on_disable_animations_check_toggled"]
-[connection signal="pressed" from="MarginContainer/Control/Settings" to="." method="_on_settings_pressed"]
+[connection signal="focus_exited" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
+[connection signal="text_submitted" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
+[connection signal="pressed" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder/FindFile" to="." method="_on_find_file_pressed"]
+[connection signal="focus_exited" from="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" to="." method="_on_title_format_text_submitted"]
+[connection signal="text_submitted" from="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat" to="." method="_on_title_format_text_submitted"]
+[connection signal="pressed" from="Settings/MarginContainer/VBoxContainer/MarginContainer2/TitleFormat/TitleFormat/TitleFormatReset" to="." method="_on_title_format_reset_pressed"]
+[connection signal="selection_updated" from="Settings/MarginContainer/VBoxContainer/VideoFormat/VideoFormatSelector" to="." method="_on_setting_selection_updated"]
+[connection signal="selection_updated" from="Settings/MarginContainer/VBoxContainer/VideoQuality/VideoQualitySelector" to="." method="_on_setting_selection_updated"]
+[connection signal="selection_updated" from="Settings/MarginContainer/VBoxContainer/AudioFormat/AudioFormatSelector" to="." method="_on_setting_selection_updated"]
+[connection signal="selection_updated" from="Settings/MarginContainer/VBoxContainer/AudioQuality/AudioQualitySelector" to="." method="_on_setting_selection_updated"]
+[connection signal="toggled" from="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer/DisableAnimationsCheck" to="." method="_on_disable_animations_check_toggled"]
+[connection signal="toggled" from="Settings/MarginContainer/VBoxContainer/MarginContainer3/HBoxContainer/HBoxContainer2/DisableAnimationsCheck" to="." method="_on_disable_animations_check_toggled"]
+[connection signal="pressed" from="SettingsButtonHolder/Control/Settings" to="." method="_on_settings_pressed"]
