@@ -339,8 +339,8 @@ func update_progress(process_hook : Dictionary, progress_hook : Dictionary, usin
 	
 	if queue.size() == 0:
 		if open_directory_on_finish:
-			print("opening " + current_request.get_bound_arguments()[2][4].replace("\"", ""))
-			OS.create_process("explorer.exe", [current_request.get_bound_arguments()[2][4].replace("\"", "").replace("/", "\\")])
+			print("opening " + current_request.get_bound_arguments()[2][4].replace("\"", "").replace("//", "/").replace("/", "\\"))
+			OS.create_process("explorer.exe", [current_request.get_bound_arguments()[2][4].replace("\"", "").replace("//", "/").replace("/", "\\")])
 		
 		if close_on_finish:
 			print("Closing gracefully because finish detected")
@@ -434,11 +434,14 @@ func download_video(link : String, output_dir : String, file_name_format: String
 		#"--newline",
 	]
 	
-	if muted: args.append("--mute")
+	
 	
 	#args.append_array(ARG_BINDINGS[codec])
 	args.append_array(ARG_BINDINGS[format])
 	args.append_array(ARG_BINDINGS[quality])
+	if muted:
+		args[-1] = args[-1].left(args[-1].find("+bestaudio")) + "\"" 
+	
 	
 	var request_call : Callable = Callable(create_request.bindv([progress_hook, false, args, Binary.YTDLP, false, false, false, true, Util.create_temp_unique_id()]))
 	queue.append(request_call)

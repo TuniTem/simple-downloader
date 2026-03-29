@@ -37,7 +37,10 @@ func _ready() -> void:
 				quality = args[i+1].remove_chars("K") + "kb/s"
 			
 			"-f":
-				quality = YTDLP.ARG_BINDINGS.find_key([args[i], args[i+1]])
+				if YTDLP.ARG_BINDINGS.find_key([args[i], args[i+1]]):
+					quality = YTDLP.ARG_BINDINGS.find_key([args[i], args[i+1]])
+				else:
+					quality = "Best"
 	
 	
 	update_selected()
