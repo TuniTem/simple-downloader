@@ -6,7 +6,7 @@ const DEFAULT_TITLE_FORMAT = "[playlist_number] [title] ([quality])"
 #const DEFAULT_OUTPUT_FOLDER = "%USERPROFILE%/downloads"
 
 const DEFAULT_WINDOWS_SIZE = Vector2i(864, 140)
-const SETTINGS_WINDOWS_SIZE = Vector2i(864, 486)
+const SETTINGS_WINDOWS_SIZE = Vector2i(864, 486 + 20)
 const ANIMATION_SPEED : float = 0.75
 const DEFAULT_OPACITY : float = 0.9
 
@@ -21,11 +21,15 @@ const DEFAULT_OPACITY : float = 0.9
 @onready var audio: Button = %Audio
 @onready var video: Button = %Video
 @onready var mute: Button = %Mute
+@onready var create_directory_for_playlists: CheckBox = %CreateDirectoryForPlaylists
+@onready var open_directory: CheckBox = %OpenDirectory
+@onready var close_when_done: CheckBox = %CloseWhenDone
 @onready var background: Panel = %Background
 @onready var queue_completion: ProgressBar = %QueueCompletion
 @onready var queue_node: MarginContainer = %Queue
 @onready var download_completion: ProgressBar = %DownloadCompletion
 @onready var queue_container: VBoxContainer = %QueueContainer
+@onready var processor_option_button: OptionButton = %OptionButton
 @onready var click_to_copy: Label = %ClickToCopy
 @onready var error_container: MarginContainer = %ErrorContainer
 @onready var error_label: Label = %ErrorLabel
@@ -54,14 +58,13 @@ var disable_animations : bool = false
 var settings : Dictionary[String, String]
 
 func _ready() -> void:
+	%Settings.hide()
 	attempt_clipboard_link_paste()
 	load_settings()
 	
 	YTDLP.new_hook.connect(_on_new_hook)
 	YTDLP.user_error.connect(_on_user_error)
 	YTDLP.unhandled_error.connect(_on_unhandeld_error)
-	
-	
 	YTDLP.main = self
 	
 	get_window().size = SETTINGS_WINDOWS_SIZE
@@ -90,6 +93,17 @@ func load_settings():
 	disable_animations = File.load_var("disable_animations", false)
 	disable_animations_check.button_pressed = disable_animations
 	set_backgorund_alpha(1.0 if disable_animations else DEFAULT_OPACITY)
+	
+	YTDLP.create_directory_for_playlists = File.load_var("create_directory_for_playlists", true)
+	create_directory_for_playlists.button_pressed = YTDLP.create_directory_for_playlists
+	
+	YTDLP.close_on_finish = File.load_var("close_on_finish", false)
+	close_when_done.button_pressed = YTDLP.close_on_finish
+	
+	var prosessor_index = File.load_var("processor_usage_index", 2)
+	processor_option_button.select(prosessor_index)
+	YTDLP.processor_usage = PROCESS_ENUM_CONVERT[prosessor_index]
+	
 	
 	for selector : SingleSelectContainer in selectors:
 		var starting_setting : String = File.load_var(selector.update_id, selector.default_pressed_id)
@@ -352,6 +366,7 @@ const MAX_QUEUE_VISIBLE_ENTRIES : int = 5
 const QUEUE_ENTRY = preload("uid://f81lwmrrm2w7")
 var prev_queue_size : int  = -1
 
+
 func update_queue_visual():
 	var shown : Array[Callable] = YTDLP.queue.duplicate()
 	#if YTDLP.current_request != null:
@@ -445,3 +460,30 @@ func _on_err_copy_pressed() -> void:
 	
 	await Util.sleep(0.5)
 	copying = false
+
+
+func _on_create_directory_for_playlists_toggled(toggled_on: bool) -> void:
+	YTDLP.create_directory_for_playlists = toggled_on
+	File.save_var("create_directory_for_playlists", toggled_on)
+
+func _on_open_directory_toggled(toggled_on: bool) -> void:
+	YTDLP.open_directory_on_finish = toggled_on
+	File.save_var("open_directory_on_finish", toggled_on)
+
+func _on_close_when_done_toggled(toggled_on: bool) -> void:
+	YTDLP.close_on_finish = toggled_on
+	File.save_var("close_on_finish", toggled_on)
+
+const PROCESS_ENUM_CONVERT : Dictionary[int, YTDLP.ProcessorUsage] = {
+	0 : YTDLP.ProcessorUsage.LOW,
+	1 : YTDLP.ProcessorUsage.BELOW_AVERAGE,
+	2 : YTDLP.ProcessorUsage.AVERAGE,
+	3 : YTDLP.ProcessorUsage.ABOVE_AVERAGE,
+	4 : YTDLP.ProcessorUsage.HIGH,
+	5 : YTDLP.ProcessorUsage.REALTIME,
+}
+
+
+func _on_option_button_item_selected(index: int) -> void:
+	YTDLP.processor_usage = PROCESS_ENUM_CONVERT[index]
+	File.save_var("processor_usage_index", index)

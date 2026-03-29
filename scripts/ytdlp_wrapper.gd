@@ -3,7 +3,17 @@ var main : Control # cannonically this hsouldnt be here
 enum Binary {
 	YTDLP,
 	FFMPEG,
-	FFPROBE
+	#FFPROBE,
+	DENO
+}
+
+enum ProcessorUsage {
+	LOW,
+	BELOW_AVERAGE,
+	AVERAGE,
+	ABOVE_AVERAGE,
+	HIGH,
+	REALTIME
 }
 
 const ARG_BINDINGS : Dictionary[String, Array] = {
@@ -65,6 +75,15 @@ const FILE_CHARACTER_REPLACEMENT : Dictionary[String, String] = {
 	">" : "＞"
 }
 
+const PROCESSOR_STRING_CONVERTION : Dictionary[ProcessorUsage, String] = {
+	ProcessorUsage.LOW : "low",
+	ProcessorUsage.BELOW_AVERAGE : "belownormal",
+	ProcessorUsage.AVERAGE : "normal",
+	ProcessorUsage.ABOVE_AVERAGE : "abovenormal",
+	ProcessorUsage.HIGH : "high",
+	ProcessorUsage.REALTIME : "high", # i dont think anyone wants real-time.... https://devblogs.microsoft.com/oldnewthing/20100610-00/?p=13753
+}
+
 #const CONTAINER_BINDINGS : Dictionary[String, String] = {
 	#"mp4" : "h264",
 	#"avi" : 
@@ -74,19 +93,26 @@ const FILE_CHARACTER_REPLACEMENT : Dictionary[String, String] = {
 const BINARY_NAMES : Dictionary[Binary, String] = {
 	Binary.YTDLP : "yt-dlp.exe",
 	Binary.FFMPEG : "ffmpeg.exe",
-	Binary.FFPROBE : "ffprobe.exe" 
+	#Binary.FFPROBE : "ffprobe.exe" ,
+	Binary.DENO : "deno.exe"
 }
 
 const ZIP_NAMES : Dictionary[Binary, String] = {
 	Binary.YTDLP : "yt-dlp.zip",
 	Binary.FFMPEG : "ffmpeg.zip",
-	Binary.FFPROBE : "ffprobe.zip" 
+	#Binary.FFPROBE : "ffprobe.zip" ,
+	Binary.DENO : "deno.zip"
 }
 
 const FILENAME_FORMAT_FLAGS : Dictionary[String, String] = {
 	"[playlist_number]" : "%(playlist_autonumber|)s",
 	"[title]" : "%(title)s",
-	"[author]" : "%(creator|Unknown)s",
+	"[author]" : "%(creator,channel,uploader|Unknown)s",
+	"[date]" : "%(upload_date>%m-%d-%Y)s",
+	"[date_d]" : "%(upload_date>%d-%m-%Y)s",
+	"[year]" : "%(release_year)s",
+	"[duration]" : "%(duration_string)s",
+	"[resolution]" : "%(resolution)s"
 	#"[quality]" : "%(asr)s",
 	#"[quality]" : "%(height)sp"
 }
@@ -125,6 +151,11 @@ var child_processes_ids : Array[int] = []
 
 var queue : Array[Callable]
 var current_request : Callable
+
+var create_directory_for_playlists : bool = false
+var open_directory_on_finish : bool = true
+var close_on_finish : bool = false
+var processor_usage : ProcessorUsage = ProcessorUsage.AVERAGE
 
 func _ready() -> void:
 	unhandled_error.connect(_on_unhandled_error)
@@ -166,18 +197,18 @@ func run(args : Array, binary : Binary = Binary.YTDLP, console : bool = false, p
 		concatinated_args += " " + arg
 	
 	if print_input:
-		print("RUNNING COMMAND:\ncd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /belownormal /b /wait " + BINARY_NAMES[binary] + concatinated_args)
+		print("RUNNING COMMAND:\ncd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /" + PROCESSOR_STRING_CONVERTION[processor_usage] + " /b /wait " + BINARY_NAMES[binary] + concatinated_args)
 	
 	var output : Array = []
 	
 	if block : 
-		OS.execute("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /belownormal /b /wait " + BINARY_NAMES[binary] + concatinated_args], output, false, console)
+		OS.execute("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /" + PROCESSOR_STRING_CONVERTION[processor_usage] + " /b /wait " + BINARY_NAMES[binary] + concatinated_args], output, false, console)
 		if print_output:
 			print(output[0])
 		return output
 		
 	else:
-		var pipe : Dictionary = OS.execute_with_pipe("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /belownormal /b /wait " + BINARY_NAMES[binary] + concatinated_args], false)
+		var pipe : Dictionary = OS.execute_with_pipe("CMD.exe", ["/C", "cd " + ProjectSettings.globalize_path(BINARY_LOCATION) + " && start \"\" /" + PROCESSOR_STRING_CONVERTION[processor_usage] + " /b /wait " + BINARY_NAMES[binary] + concatinated_args], false)
 		child_processes_ids.append(pipe["pid"])
 		return pipe
 	
@@ -305,6 +336,15 @@ func update_progress(process_hook : Dictionary, progress_hook : Dictionary, usin
 			send_error(errors)
 	
 	progress_hook["done"] = true
+	
+	if queue.size() == 0:
+		if open_directory_on_finish:
+			print("opening " + current_request.get_bound_arguments()[2][4].replace("\"", ""))
+			OS.create_process("explorer.exe", [current_request.get_bound_arguments()[2][4].replace("\"", "").replace("/", "\\")])
+		
+		if close_on_finish:
+			print("Closing gracefully because finish detected")
+			get_tree().quit()
 
 signal unhandled_error(code : int, message : String)
 signal user_error(code : int, message : String)
@@ -312,13 +352,14 @@ signal user_error(code : int, message : String)
 const USER_ERRORS : Dictionary[String, Array] = {
 	"is not a valid URL": [2, "Invalid URL"],
 	"No media found": [3, "No media found"],
-	"Unsupported URL": [4, "Unsupported URL"]
+	"Unsupported URL": [4, "Unsupported URL"],
+	"members-only content" : [5, "Restricted"]
 }
 
 const PROGRAM_ERRORS : Dictionary[String, Array] = {
 	"no such option": [101, "Argument parse error"],
 	"Failed to extract any player response" : [102, "Timed out - No player response"],
-	"being used by another process" : [103, "Attempted to access file in use"]
+	"being used by another process" : [103, "Attempted to access file in use"],
 } 
 const IGNORE_ERRORS : Array = [
 	"WARNING",
@@ -351,7 +392,7 @@ func send_error(errors_str : String):
 				handled = true
 		
 		if not handled:
-			unhandled_error.emit(201, error.right(-error.find("]") + 2))
+			unhandled_error.emit(201, error.right(-error.find("]") - 2))
 
 
 func _on_unhandled_error(code : int, message : String):
@@ -417,6 +458,10 @@ func wait_until_pipe_output(pipe : FileAccess, pid : int):
 	return out
 
 func get_playlist_title(link : String) -> String:
+	if not create_directory_for_playlists:
+		print("Playlist directory creation bypassed")
+		return ""
+	
 	var args : Array = ["\"" + link + "\"", "--cookies-from-browser", web_browser]
 	args += ARG_BINDINGS["has_playlist"]
 	

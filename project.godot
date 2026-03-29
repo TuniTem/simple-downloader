@@ -10,12 +10,18 @@ config_version=5
 
 [application]
 
-config/name="SimpleDownloader"
+config/name="DreamLoader"
+config/description="A media downloading application"
+config/version="v0.1"
 run/main_scene="uid://cd6ypfe07vx2h"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="TuniTools/Downloader"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+run/max_fps=60
+boot_splash/bg_color=Color(0, 0, 0, 0.56078434)
+boot_splash/image="uid://b1cx4eqe623n6"
+config/icon="uid://c5yw5v7go83fp"
+config/windows_native_icon="res://art/logo/DreamloaderLogo.ico"
 
 [autoload]
 
@@ -30,6 +36,7 @@ window/size/viewport_height=93
 window/size/initial_position_type=4
 window/size/resizable=false
 window/size/transparent=true
+window/size/maximize_disabled=true
 window/size/window_width_override=864
 window/size/window_height_override=140
 window/stretch/mode="canvas_items"
