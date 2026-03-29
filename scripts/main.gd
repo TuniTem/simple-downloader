@@ -1,5 +1,6 @@
 extends Control
 
+const GODOT_LOG_LOCATION : String = "user://logs/godot.log"
 
 const DEFAULT_TITLE_FORMAT = "[playlist_number] [title] ([quality])"
 #const DEFAULT_OUTPUT_FOLDER = "%USERPROFILE%/downloads"
@@ -25,6 +26,11 @@ const DEFAULT_OPACITY : float = 0.9
 @onready var queue_node: MarginContainer = %Queue
 @onready var download_completion: ProgressBar = %DownloadCompletion
 @onready var queue_container: VBoxContainer = %QueueContainer
+@onready var click_to_copy: Label = %ClickToCopy
+@onready var error_container: MarginContainer = %ErrorContainer
+@onready var error_label: Label = %ErrorLabel
+@onready var error_copy_button: Button = %ErrCopy
+@onready var error_margin_container: MarginContainer = %ErrorMarginContainer
 
 
 var first_press : bool = true
@@ -52,6 +58,10 @@ func _ready() -> void:
 	load_settings()
 	
 	YTDLP.new_hook.connect(_on_new_hook)
+	YTDLP.user_error.connect(_on_user_error)
+	YTDLP.unhandled_error.connect(_on_unhandeld_error)
+	
+	
 	YTDLP.main = self
 	
 	get_window().size = SETTINGS_WINDOWS_SIZE
@@ -127,7 +137,6 @@ func _on_mute_pressed() -> void:
 	using_audio = !using_audio
 
 func _on_settings_pressed() -> void:
-	print("s")
 	var tween : Tween = create_tween()
 	
 	settings_open = !settings_open
@@ -236,21 +245,39 @@ func _on_disable_animations_check_toggled(toggled_on: bool) -> void:
 
 
 func _on_link_submitted(_a = null) -> void:
-	var link : String = link_entry.text
-	var hook : Dictionary = YTDLP.DEFAULT_PROGRESS_HOOK.duplicate()
+	if link_entry.text == "": return
+	
+	var links : PackedStringArray
+	if link_entry.text.is_absolute_path() and FileAccess.file_exists(link_entry.text):
+		var file_links : String =  FileAccess.get_file_as_string(link_entry.text).replace("\n", ",")
+		links = file_links.split(",")
+		
+	else:
+		links = link_entry.text.split(",")
+	remove_error()
 	
 	if using_video:
 		#link_entry.text = ""
-		var item : Callable = YTDLP.download_video(link, output_path, title_format, settings["video_format"], settings["video_quality"], not using_audio, hook)
-		add_queue_item(item)
-		update_queue_visual()
+		if YTDLP.queue.size() == 0:
+			show_progress_bar_intermediary()
+		
+		for link : String in links:
+			var hook : Dictionary = YTDLP.DEFAULT_PROGRESS_HOOK.duplicate()
+			var item : Callable = await YTDLP.download_video(link, output_path, title_format, settings["video_format"], settings["video_quality"], not using_audio, hook)
+			add_queue_item(item)
+			update_queue_visual()
 		#update_progress_bars(hook)
 		
 	elif using_audio:
 		#link_entry.text = ""
-		var item : Callable = YTDLP.download_audio(link, output_path, title_format, settings["audio_format"], settings["audio_quality"], hook)
-		add_queue_item(item)
-		update_queue_visual()
+		if YTDLP.queue.size() == 0:
+			show_progress_bar_intermediary()
+		
+		for link : String in links:
+			var hook : Dictionary = YTDLP.DEFAULT_PROGRESS_HOOK.duplicate()
+			var item : Callable = await YTDLP.download_audio(link, output_path, title_format, settings["audio_format"], settings["audio_quality"], hook)
+			add_queue_item(item)
+			update_queue_visual()
 		#update_progress_bars(hook)
 	
 func add_queue_item(item : Callable):
@@ -260,7 +287,7 @@ func add_queue_item(item : Callable):
 	queue_container.add_child(inst)
 
 func _on_new_hook(hook : Dictionary, callable : Callable):
-	print("b")
+	#print("b")
 	print("start listen")
 	await update_progress_bars(hook)
 	print("stop listen")
@@ -268,12 +295,18 @@ func _on_new_hook(hook : Dictionary, callable : Callable):
 	YTDLP.request_queue()
 
 const DOWNLOAD_COMPLETION_SNAPPINESS = 2.0
-func update_progress_bars(hook : Dictionary):
+
+
+func show_progress_bar_intermediary():
 	download_completion.show()
 	download_completion.indeterminate = true
 	#var completion_tween : Tween = create_tween()
-	var prev_current = -1.0
+	
 	ui_animations.play_backwards("fade_progress")
+
+func update_progress_bars(hook : Dictionary):
+	show_progress_bar_intermediary()
+	var prev_current = -1.0
 	while not hook["done"]:
 		
 		#print("bbb")
@@ -300,7 +333,6 @@ func update_progress_bars(hook : Dictionary):
 			download_completion.indeterminate = false
 		
 		prev_current = hook["current"]
-		
 		await get_tree().process_frame
 		
 	Util.tween(download_completion, "value", download_completion.max_value, 1.0, Tween.EASE_OUT, Tween.TRANS_CUBIC)
@@ -359,8 +391,57 @@ func set_window_vertical(to : int = DEFAULT_WINDOWS_SIZE.y, one_motion: bool = f
 	
 	tween.tween_property(get_window(), "size:y", to, ANIMATION_SPEED * speed_multiplier if not disable_animations else 0.0).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 		
-		
+
+const ERR_COPY_BUTTON_MINIMUM_SIZE : Array = [23.17, 36.1225]
+const ERR_MARGIN_CONTAINER_TOP : Array = [-36, -32]
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
 		attempt_clipboard_link_paste()
+
+var error_tween : Tween
+func remove_error():
+	if error_tween: error_tween.kill()
+	error_tween = Util.tween(error_container, "modulate:a", 0.0, 5.0)
+
+func send_error(code : int, message : String, show_copy : bool):
+	error_container.show()
+	error_copy_button.custom_minimum_size.y = ERR_COPY_BUTTON_MINIMUM_SIZE[int(show_copy)]
+	error_margin_container.remove_theme_constant_override("margin_top")
+	error_margin_container.add_theme_constant_override("margin_top", ERR_MARGIN_CONTAINER_TOP[int(show_copy)])
+	click_to_copy.visible = show_copy
+	
+	error_label.text = "ERROR " + str(code) + ": " + message
+	
+	if error_tween: error_tween.kill()
+	error_tween = Util.tween(error_container, "modulate:a", 1.0, 0.5, Tween.EASE_OUT, Tween.TRANS_BOUNCE)
+
+
+func _on_user_error(code : int, message : String):
+	send_error(code, message, false)
+
+func _on_unhandeld_error(code : int, message : String):
+	send_error(code, message, true)
+
+var copying : bool = false
+func _on_err_copy_pressed() -> void:
+	if copying : return
+	copying = true
+	var log_info : String = FileAccess.get_file_as_string(GODOT_LOG_LOCATION)
+	DisplayServer.clipboard_set(log_info)
+	var prev_text : String = error_label.text
+	var prev_visibility : float = click_to_copy.visible
+	
+	Util.tween(error_label, "self_modulate", Color("d5a9ff"), 1.0, Tween.EASE_OUT, Tween.TRANS_BACK)
+	error_label.text = "Coppied to clipboard!"
+	click_to_copy.hide()
+	
+	await Util.sleep(2.0)
+	
+	
+	Util.tween(error_label, "self_modulate", Color.WHITE, 0.5, Tween.EASE_OUT, Tween.TRANS_BACK)
+	error_label.text = prev_text
+	click_to_copy.visible = prev_visibility
+	
+	await Util.sleep(0.5)
+	copying = false

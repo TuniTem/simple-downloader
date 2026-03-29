@@ -136,6 +136,11 @@ border_color = Color(0, 0, 0, 1)
 corner_radius_bottom_right = 10
 corner_detail = 5
 
+[sub_resource type="LabelSettings" id="LabelSettings_eb6dy"]
+font = ExtResource("2_0xm2m")
+font_size = 12
+font_color = Color(1, 0.6, 0.6, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ld40"]
 content_margin_left = 2.0
 content_margin_top = 2.0
@@ -256,7 +261,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/MarginContainer/MarginContainer:theme_override_constants/margin_right")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -296,7 +301,7 @@ length = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/MarginContainer/MarginContainer:theme_override_constants/margin_right")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -313,7 +318,7 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer/MarginContainer:theme_override_constants/margin_right")
+tracks/0/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/MarginContainer/MarginContainer:theme_override_constants/margin_right")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -395,6 +400,42 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer/ClickToCopy:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:mouse_filter")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_a8y0u"]
 resource_name = "hide"
@@ -425,6 +466,42 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(0.41568628, 0, 1, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.25, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer/ClickToCopy:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.25, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 0]
+}
 
 [sub_resource type="Animation" id="Animation_trceg"]
 resource_name = "show"
@@ -454,6 +531,42 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(0.2871747, 1),
 "update": 0,
 "values": [Color(0.41568628, 0, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer/ClickToCopy:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.050000012, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:self_modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.050000012, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy:mouse_filter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 2]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a8y0u"]
@@ -551,17 +664,23 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="MarginContainer" type="MarginContainer" parent="LinkUI/VBoxContainer" unique_id=1219954546]
+[node name="MarginContainer2" type="Control" parent="LinkUI/VBoxContainer" unique_id=839692088]
 layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="LinkUI/VBoxContainer/MarginContainer2" unique_id=1219954546]
+layout_mode = 0
+offset_right = 556.0
+offset_bottom = 26.0
 theme_override_constants/margin_top = -4
 theme_override_constants/margin_right = 371
 
-[node name="MarginContainer" type="MarginContainer" parent="LinkUI/VBoxContainer/MarginContainer" unique_id=1104613042]
+[node name="MarginContainer" type="MarginContainer" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer" unique_id=1104613042]
 layout_mode = 2
 theme_override_constants/margin_left = 133
 theme_override_constants/margin_right = 0
 
-[node name="Mute" type="Button" parent="LinkUI/VBoxContainer/MarginContainer/MarginContainer" unique_id=405333799]
+[node name="Mute" type="Button" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/MarginContainer" unique_id=405333799]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -574,13 +693,13 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_tipki")
 text = "🔊"
 alignment = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="LinkUI/VBoxContainer/MarginContainer" unique_id=1011688387]
+[node name="HBoxContainer" type="HBoxContainer" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer" unique_id=1011688387]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="Audio" type="Button" parent="LinkUI/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1673968802]
+[node name="Audio" type="Button" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/HBoxContainer" unique_id=1673968802]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -593,13 +712,13 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_jyhfs")
 toggle_mode = true
 text = "Audio  🎶"
 
-[node name="VSeparator" type="VSeparator" parent="LinkUI/VBoxContainer/MarginContainer/HBoxContainer" unique_id=780642217]
+[node name="VSeparator" type="VSeparator" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/HBoxContainer" unique_id=780642217]
 z_index = 1
 layout_mode = 2
 theme_override_constants/separation = 0
 theme_override_styles/separator = SubResource("StyleBoxLine_jyhfs")
 
-[node name="Video" type="Button" parent="LinkUI/VBoxContainer/MarginContainer/HBoxContainer" unique_id=1058709010]
+[node name="Video" type="Button" parent="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/HBoxContainer" unique_id=1058709010]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -611,6 +730,78 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_tefeu")
 theme_override_styles/focus = SubResource("StyleBoxFlat_tefeu")
 toggle_mode = true
 text = "Video  🎞️"
+
+[node name="ErrorContainer" type="MarginContainer" parent="LinkUI/VBoxContainer/MarginContainer2" unique_id=430515334]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = -42.0
+offset_bottom = 21.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 188
+theme_override_constants/margin_top = 54
+theme_override_constants/margin_right = 1
+
+[node name="ErrorMarginContainer" type="MarginContainer" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer" unique_id=1455595315]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 8
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = -32
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 4
+
+[node name="ErrCopy2" type="Button" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer" unique_id=1699558915]
+custom_minimum_size = Vector2(322.5875, 22.379)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("6_85g3d")
+
+[node name="ErrCopy" type="Button" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer" unique_id=343233456]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(322.5875, 23.17)
+layout_mode = 2
+size_flags_vertical = 0
+theme = ExtResource("6_85g3d")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy" unique_id=1914936009]
+layout_mode = 0
+offset_right = 319.0
+offset_bottom = 32.0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer" unique_id=527168651]
+custom_minimum_size = Vector2(0, 2.2165)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ErrorLabel" type="Label" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer" unique_id=419059236]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(100, 16)
+layout_mode = 2
+text = " ERR: YOUUUU MESSED UPdfgfawegaw egawegawegfghjfghj"
+label_settings = SubResource("LabelSettings_eb6dy")
+horizontal_alignment = 1
+text_overrun_behavior = 3
+
+[node name="ClickToCopy" type="Label" parent="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy/VBoxContainer" unique_id=1335955398]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "(Click to copy log to clipboard, dm to me!)"
+label_settings = SubResource("LabelSettings_eb6dy")
+horizontal_alignment = 1
+autowrap_mode = 2
 
 [node name="ProgressBars" type="VBoxContainer" parent="." unique_id=741289745]
 layout_mode = 1
@@ -1796,8 +1987,8 @@ anchor_bottom = 1.0
 offset_top = -13.0
 offset_right = 139.0
 grow_vertical = 0
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_bottom = -1
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="Watermark" unique_id=398519284]
 modulate = Color(0.39688927, 0.39688927, 0.39688924, 1)
@@ -1895,9 +2086,11 @@ theme_override_constants/separation = 0
 
 [connection signal="text_submitted" from="LinkUI/VBoxContainer/LinkEntry" to="." method="_on_link_submitted"]
 [connection signal="pressed" from="LinkUI/VBoxContainer/LinkEntry/Submit" to="." method="_on_link_submitted"]
-[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/MarginContainer/Mute" to="." method="_on_mute_pressed"]
-[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/HBoxContainer/Audio" to="." method="_on_audio_pressed"]
-[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer/HBoxContainer/Video" to="." method="_on_video_pressed"]
+[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/MarginContainer/Mute" to="." method="_on_mute_pressed"]
+[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/HBoxContainer/Audio" to="." method="_on_audio_pressed"]
+[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer2/MarginContainer/HBoxContainer/Video" to="." method="_on_video_pressed"]
+[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy2" to="." method="_on_err_copy_pressed"]
+[connection signal="pressed" from="LinkUI/VBoxContainer/MarginContainer2/ErrorContainer/ErrorMarginContainer/ErrCopy" to="." method="_on_err_copy_pressed"]
 [connection signal="focus_exited" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
 [connection signal="text_submitted" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder" to="." method="_on_output_folder_text_submitted"]
 [connection signal="pressed" from="Settings/MarginContainer/VBoxContainer/MarginContainer/OutputFolder/OutputFolder/FindFile" to="." method="_on_find_file_pressed"]

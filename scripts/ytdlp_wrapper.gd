@@ -127,6 +127,8 @@ var queue : Array[Callable]
 var current_request : Callable
 
 func _ready() -> void:
+	unhandled_error.connect(_on_unhandled_error)
+	
 	# find default web browser
 	var output = []
 	OS.execute("CMD.exe", ["/C", FIND_DEFAULT_BROWSER_COMMAND], output)
@@ -297,12 +299,63 @@ func update_progress(process_hook : Dictionary, progress_hook : Dictionary, usin
 				
 				
 			
-			#print(output)
+			print(output)
 		
 		if errors.length() > 3:
-			printerr(errors) # TODO add on screen error printer
+			send_error(errors)
 	
 	progress_hook["done"] = true
+
+signal unhandled_error(code : int, message : String)
+signal user_error(code : int, message : String)
+
+const USER_ERRORS : Dictionary[String, Array] = {
+	"is not a valid URL": [2, "Invalid URL"],
+	"No media found": [3, "No media found"],
+	"Unsupported URL": [4, "Unsupported URL"]
+}
+
+const PROGRAM_ERRORS : Dictionary[String, Array] = {
+	"no such option": [101, "Argument parse error"],
+	"Failed to extract any player response" : [102, "Timed out - No player response"],
+	"being used by another process" : [103, "Attempted to access file in use"]
+} 
+const IGNORE_ERRORS : Array = [
+	"WARNING",
+	"yt-dlp.exe [OPTIONS] URL",
+	"Unicode parsing error"
+]
+
+func send_error(errors_str : String): 
+	var errors : PackedStringArray = errors_str.split("\n")
+	for error : String in errors:
+		if error.length() < 3:
+			continue
+		
+		printerr(error)
+		
+		for ignore_error in IGNORE_ERRORS:
+			if error.contains(ignore_error):
+				print("misc unhandled error above")
+				continue
+		
+		var handled : bool = false
+		for user_err in USER_ERRORS.keys():
+			if error.contains(user_err):
+				user_error.emit(USER_ERRORS[user_err][0], USER_ERRORS[user_err][1])
+				handled = true
+		
+		for program_err in PROGRAM_ERRORS.keys():
+			if error.contains(program_err):
+				unhandled_error.emit(PROGRAM_ERRORS[program_err][0], PROGRAM_ERRORS[program_err][1])
+				handled = true
+		
+		if not handled:
+			unhandled_error.emit(201, error.right(-error.find("]") + 2))
+
+
+func _on_unhandled_error(code : int, message : String):
+	print("!! Important Error Above !!")
 
 const DEFAULT_PROGRESS_HOOK : Dictionary = {"current": 0.0, "playlist": -1, "playlist_total" : -1, "is_audio" : false, "done" : false}
 
@@ -310,7 +363,7 @@ func download_audio(link : String, output_dir : String, file_name_format: String
 	var args : Array[String] = [
 		"\"" + link + "\"",
 		"-o", "\"" + format_filename(file_name_format).replace("[quality]", quality) + ".%(ext)s" + "\"",
-		"-P", "\"" + output_dir + "/" + get_playlist_title(link) + "\"",
+		"-P", "\"" + output_dir + "/" + await get_playlist_title(link) + "\"",
 		"--cookies-from-browser", web_browser,
 		"--embed-metadata",
 		"--no-playlist"
@@ -332,7 +385,7 @@ func download_video(link : String, output_dir : String, file_name_format: String
 	var args : Array[String] = [
 		"\"" + link + "\"",
 		"-o", "\"" + format_filename(file_name_format).replace("[quality]", "%(height)sp") + ".%(ext)s" + "\"",
-		"-P", "\"" + output_dir + "/" + get_playlist_title(link) + "\"",
+		"-P", "\"" + output_dir + "/" + await  get_playlist_title(link) + "\"",
 		"--cookies-from-browser", web_browser,
 		"--embed-metadata",
 		"--no-playlist"
@@ -355,12 +408,21 @@ func download_video(link : String, output_dir : String, file_name_format: String
 	#update_progress(runtime_info, progress_hook, false)
 	#return progress_hook
 
+func wait_until_pipe_output(pipe : FileAccess, pid : int):
+	var out : String = ""
+	while OS.is_process_running(pid):
+		out += pipe.get_as_text()
+		await get_tree().process_frame
+		
+	return out
+
 func get_playlist_title(link : String) -> String:
-	var args : Array = ["\"" + link + "\""]
+	var args : Array = ["\"" + link + "\"", "--cookies-from-browser", web_browser]
 	args += ARG_BINDINGS["has_playlist"]
 	
-	var playlist_test : Array = run(args, Binary.YTDLP, false, true, true, true)
-	var response_string : String = playlist_test[0]
+	var playlist_test : Dictionary = run(args, Binary.YTDLP, false, true, false, true)
+	
+	var response_string : String = await wait_until_pipe_output(playlist_test["stdio"], playlist_test["pid"])
 	
 	if not response_string.contains("NA"):
 		print("is playlist")
@@ -392,7 +454,7 @@ func create_request(progress_hook : Dictionary, using_audio : bool , args : Arra
 var current_hook : Dictionary
 
 func request_queue():
-	print("request a: ", queue.size() == 0, " ", current_hook.has("done") and current_hook["done"] == false)
+	#print("request a: ", queue.size() == 0, " ", current_hook.has("done") and current_hook["done"] == false)
 	
 	if queue.size() == 0 or (current_hook.has("done") and current_hook["done"] == false): 
 		print("queue is currently active! waiting..")
@@ -403,7 +465,6 @@ func request_queue():
 	
 	current_request = next
 	current_hook = hook
-	print("aa")
 	new_hook.emit(hook, next)
 	##await Util.wait(5.0)
 	#current_hook["done"] = true
