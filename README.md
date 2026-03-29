@@ -19,6 +19,8 @@ I do plan to add more advanced settings in the future! I have many many ideas c:
 4. Download queue - input as many links as you like, whenever you like!
 You can also provide a path to a text file containing a list of links, either comma seperated or each on their own line
 
+<img width="977" height="490" alt="image" src="https://github.com/user-attachments/assets/e635b7de-1a97-44d1-9d18-317ef0668646" />
+
 5. Playlist downloading - automatically sort downloaded playlists into their own files, with titles retrived and automatically generated!
 
 6. Lots of polish that you might not expect in an app! But you can turn it off if you dont like it.
