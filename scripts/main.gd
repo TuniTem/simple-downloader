@@ -229,7 +229,7 @@ func _on_settings_pressed() -> void:
 		
 		if queue_open:
 			await tween.finished
-			print("SHAOWING")
+			#print("SHAOWING")
 			queue_container.show()
 			queue_node.show()
 			Util.tween(queue_container, "modulate:a", 1.0, 0.5, Tween.EASE_OUT, Tween.TRANS_CUBIC)
